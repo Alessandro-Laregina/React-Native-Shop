@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
+import { DATA } from './list.mock';
+import Card from './src/Card';
+import Title from './src/Title';
 
-export default function App() {
+const App = () => {
+
+  const renderItem = ({ item, index }: any) => {
+    if (index == 0) return ( // fake status bar
+      <>
+        <Title title='amazon' />
+        <Card item={item} />
+      </>
+    )
+    return (<Card item={item} />)
+  }
+
   return (
+    // <SafeAreaView style={styles.container}>
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => `key_${index}`}
+      />
     </View>
+    // </SafeAreaView> 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: '#f8f8'
+  }
 });
+
+export default App;
